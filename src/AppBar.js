@@ -13,9 +13,12 @@ import AddIcon from '@mui/icons-material/Add';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import CssBaseline from '@mui/material/CssBaseline';
+import Toolbar from '@mui/material/Toolbar';
+import Notebooks from './Notebooks';
+import {useState, useEffect} from "react"
 
 const drawerWidth = 240;
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -34,6 +37,8 @@ const AppBar = () => {
   };
 
   return (
+    <Box sx={{ display: 'flex' }}>
+    <CssBaseline />
     <Drawer
       sx={{
         width: drawerWidth,
@@ -105,6 +110,16 @@ const AppBar = () => {
         ))}
       </List>
     </Drawer>
+    
+    <Box
+      component="main"
+      sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+    >
+      <Toolbar />
+      
+    <Notebooks />
+    </Box>
+  </Box>
   );
     
 }

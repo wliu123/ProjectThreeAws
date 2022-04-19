@@ -12,11 +12,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 
-
-
-const CreateNote = () => {
-    const [title, setTitle] = useState("")
-    const [body, setBody] = useState("")
+const OneNotebook = () => {
     const [currentNotebook, setCurrentNotebook] = useState("Productivity")
     const [noteData, setNoteData] = useState([])
 
@@ -25,13 +21,6 @@ const CreateNote = () => {
         .then(req => req.json())
         .then(setNoteData)
     }, [])
-
-    function handleSubmit(e) {
-        e.preventDefault()
-        if (title && body) {
-            console.log(title, body)
-        }
-    }
     
     return (
         <Box sx={{flexGrow: 1}}>
@@ -65,27 +54,7 @@ const CreateNote = () => {
                 </Grid>
                 <Grid item xs={8}>
                     <Button variant="text" startIcon={<MenuBookIcon/>}>{currentNotebook}</Button>
-                    <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-                    <TextField 
-                        onChange={(e) => setTitle(e.target.value)}
-                        sx={{mt:10, display: "block"}}
-                        label="Title" 
-                        variant="standard" 
-                        fullWidth 
-                        required/>
-                    <TextField 
-                        onChange={(e) => setBody(e.target.value)}
-                        sx={{mt:10, display: "block"}}
-                        label="Body" 
-                        variant="standard" 
-                        multiline
-                        rows={21}
-                        fullWidth 
-                        required/>
-                        <BottomNavigation sx={{width: "100%", bgcolor: "white"}}>
-                            <Button type="submit" variant="contained"> Submit </Button>
-                        </BottomNavigation>
-                    </form>
+                    
                 </Grid>
 
             </Grid>
@@ -93,4 +62,4 @@ const CreateNote = () => {
     )
     
 }
-export default CreateNote
+export default OneNotebook
