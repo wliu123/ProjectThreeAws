@@ -1,29 +1,35 @@
-
 import './App.css';
-import Notebooks from './Notebooks';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
-import AppBar from './AppBar';
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import WelcomePage from './WelcomePage';
+import HomePage from './HomePage';
+import ErrorPage from './ErrorPage';
+import SignUp from './SignUp';
+import Login from './Login';
+
 
 
 function App() {
-
+  
 
   return (
-    <Box sx={{ display: 'flex' }}>
-    <CssBaseline />
-    <AppBar/>
-    <Box
-      component="main"
-      sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
-    >
-      <Toolbar />
+    <div className="App">
+      <h1>Typo.io</h1>
       
-    <Notebooks />
-    </Box>
-  </Box>
-  );
+    <Router>
+      <Routes>
+      
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/home/notebooks" element={<HomePage />} />
+        <Route path="*" element={<ErrorPage />} />
+        <Route path="/login" element={<Login />} />
+        
+      </Routes>
+    </Router>
+    
+    </div>
+   
+    );
 }
 
 export default App;
