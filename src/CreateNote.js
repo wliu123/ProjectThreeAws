@@ -28,9 +28,18 @@ const CreateNote = () => {
 
     function handleSubmit(e) {
         e.preventDefault()
-        if (title && body) {
-            console.log(title, body)
-        }
+        fetch('http://localhost:9292/new_note', {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({
+                title: title,
+                body: body,
+                notebook_id: currentNotebook.id,
+                user_id: currentUser.id
+            })
+        })
     }
     
     return (
