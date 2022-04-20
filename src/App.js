@@ -4,12 +4,16 @@ import WelcomePage from './WelcomePage';
 import HomePage from './HomePage';
 import ErrorPage from './ErrorPage';
 import SignUp from './SignUp';
-import Login from './Login';
+import { useState } from "react";
+
 
 
 
 function App() {
-  
+
+
+    const [currentUser, setCurrentUser] = useState([])
+    
 
   return (
     <div className="App">
@@ -18,12 +22,12 @@ function App() {
     <Router>
       <Routes>
       
-        <Route path="/" element={<WelcomePage />} />
+        <Route path="/" element={<WelcomePage setCurrentUser={setCurrentUser} />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/home/notebooks" element={<HomePage />} />
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/login" element={<Login />} />
-        
+        <Route path="/:id/home" element={<HomePage />} />
+      
       </Routes>
     </Router>
     

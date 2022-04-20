@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function WelcomePage() {
+function WelcomePage({setCurrentUser}) {
     
     const [formState, setFormState] = useState({
         name: ""
@@ -11,7 +11,6 @@ function WelcomePage() {
 
     const {name} = formState
 
-    const [currentUser, setCurrentUser] = useState([])
 
     function handleChange(e) {
         const newFormState = {...formState, [e.target.name]: e.target.value}
@@ -25,10 +24,12 @@ function WelcomePage() {
 
         fetch(`http://localhost:9292/login/${name}`)
         .then((res) => res.json())
-        .then(data => console.log(data))
-
-        // if formState.name === true
-            // navigate(`/${formState.id}/home`)
+        .then(data => {
+            if (name) {
+            setCurrentUser(data.name)
+            navigate(`/${data.id}/home`)
+            console.log(data)
+        }})
     }
 
 
@@ -43,7 +44,7 @@ function WelcomePage() {
                 <input className="form-inputs" type="text" name="name" placeholder="Name" onChange={handleChange} value={name} />
                 <button onClick={handleFormSubmit} id="form-btn" type="submit">Sign-in</button>
                 <br></br>
-                <a href="href=http://localhost:3000/sign-up">Don't have an account? Sign up</a>
+                <a href="http://localhost:3000/sign-up">Don't have an account? Sign up</a>
             </form>
 
       </div>
