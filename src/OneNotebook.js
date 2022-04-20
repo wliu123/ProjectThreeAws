@@ -1,27 +1,16 @@
 import { useEffect, useState } from "react"
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import { Button } from "@mui/material";
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import ListSubheader from '@mui/material/ListSubheader';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import CssBaseline from '@mui/material/CssBaseline';
 
 
-const OneNotebook = ({notes, onAddNote, onDeleteNote, activeNote, setActiveNote}) => {
-    const [currentNotebook, setCurrentNotebook] = useState("Productivity")
+const OneNotebook = ({notes, setNotes, onAddNote, onDeleteNote, activeNote, setActiveNote, currentNotebook}) => {
     
-
-    
+    useEffect(() => {
+        fetch(`http://localhost:9292/notebook/${currentNotebook}`)
+        .then(res => res.json())
+        .then (receivedData => setNotes(receivedData.notes))
+    }, [currentNotebook])
     
     return (
-       
+      
         
         <div className="app-sidebar">
             <div className="app-sidebar-header">
