@@ -1,36 +1,34 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+///////////////////////////////////////////////////////////////////////////////
 import WelcomePage from './WelcomePage';
-import HomePage from './HomePage';
 import ErrorPage from './ErrorPage';
 import SignUp from './SignUp';
-import { useState } from "react";
-
-
+import AppBar from './AppBar';
+import Notebooks from './Notebooks';
+import OneNotebook from './OneNotebook';
+import MainDisplay from './MainDisplay';
 
 
 function App() {
 
-
-    const [currentUser, setCurrentUser] = useState([])
+  const [currentUser, setCurrentUser] = useState([])
     
-
   return (
     <div className="App">
       <h1>Typo.io</h1>
-      
-    <Router>
-      <Routes>
-      
-        <Route path="/" element={<WelcomePage setCurrentUser={setCurrentUser} />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/home/notebooks" element={<HomePage />} />
-        <Route path="*" element={<ErrorPage />} />
-        <Route path="/:id/home" element={<HomePage />} />
-      
-      </Routes>
-    </Router>
-    
+    <BrowserRouter>
+          <Routes>
+
+            <Route path="/" element={<WelcomePage setCurrentUser={setCurrentUser} />}/> 
+            <Route path=":id/home" element={<><AppBar /> <Notebooks /> </>} />
+            <Route path="/notebooks/notes" element={<><AppBar /> <OneNotebook /> <MainDisplay /> </>} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="*" element={<ErrorPage />} />
+
+          </Routes>
+    </BrowserRouter>
     </div>
    
     );

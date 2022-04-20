@@ -13,27 +13,68 @@ import AddIcon from '@mui/icons-material/Add';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import CssBaseline from '@mui/material/CssBaseline';
+import Toolbar from '@mui/material/Toolbar';
+import Notebooks from './Notebooks';
+import {useState, useEffect} from "react"
+import OneNotebook from './OneNotebook';
+import MainDisplay from './MainDisplay';
 
 const drawerWidth = 240;
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const AppBar = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const [notes, setNotes] = useState([])
+    const [activeNote, setActiveNote] = useState(false)
+
+    useEffect(() => {
+      fetch('http://localhost:9292/notes')
+      .then(req => req.json())
+      .then(data => setNotes(data))
+  }, [])
 
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
+  const onAddNote = () => {
+    const newNote = {
+      id: 1,
+      title: "Untitled",
+      body: "",
+      lastModified: Date.now()
+    }
+    setNotes([...notes, newNote])
+  }
+
+  const onDeleteNote = (idToDelete) => {
+    setNotes(notes.filter((note) => note.id !== idToDelete))
+  }
+
+  const onUpdateNote = (updatedNote) => {
+    const updatedNotes = notes.map(note => {
+      if (note.id === activeNote) {
+        return updatedNote
+      }
+      return note
+    })
+    setNotes(updatedNotes)
+  }
+
+  const getActiveNote = () => {
+    return notes.find(note => note.id === activeNote)
+  }
+
   return (
+    <Box sx={{ display: 'flex' }}>
+    <CssBaseline/>
     <Drawer
       sx={{
         width: drawerWidth,
@@ -105,6 +146,12 @@ const AppBar = () => {
         ))}
       </List>
     </Drawer>
+    {/* <OneNotebook notes={notes} onAddNote={onAddNote} onDeleteNote={onDeleteNote} activeNote={activeNote} setActiveNote={setActiveNote}/>
+    <MainDisplay activeNote={getActiveNote()} onUpdateNote={onUpdateNote}/> */}
+    
+    
+    
+  </Box>
   );
     
 }
