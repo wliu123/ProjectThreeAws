@@ -16,13 +16,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 const OneNotebook = ({notes, onAddNote, onDeleteNote, activeNote, setActiveNote}) => {
     const [currentNotebook, setCurrentNotebook] = useState("Productivity")
-    // const [noteData, setNoteData] = useState([])
+    
 
-    // useEffect(() => {
-    //     fetch('http://localhost:9292/notes')
-    //     .then(req => req.json())
-    //     .then(data => setNoteData(data))
-    // }, [])
+    
     
     return (
        

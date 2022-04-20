@@ -11,7 +11,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import CreateNote from './CreateNote';
+
 import OneNotebook from './OneNotebook';
 
 
@@ -22,7 +22,6 @@ function App() {
 
     <Routes>
       <Route path="/" element={<AppBar />}></Route>
-      <Route path="create_notes" element={<CreateNote />} />
       <Route path="/one_notebook" element={<OneNotebook />} />
     </Routes>
  

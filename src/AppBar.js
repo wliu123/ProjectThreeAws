@@ -30,6 +30,12 @@ const AppBar = () => {
     const [notes, setNotes] = useState([])
     const [activeNote, setActiveNote] = useState(false)
 
+    useEffect(() => {
+      fetch('http://localhost:9292/notes')
+      .then(req => req.json())
+      .then(data => setNotes(data))
+  }, [])
+
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
