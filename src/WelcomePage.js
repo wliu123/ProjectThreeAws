@@ -25,7 +25,7 @@ function WelcomePage({setCurrentUser}) {
         .then((res) => res.json())
         .then(data => {
             if (name) {
-            setCurrentUser(data.name)
+            setCurrentUser(data)
             navigate(`/${data.id}/home`)
             console.log(data)
         }})

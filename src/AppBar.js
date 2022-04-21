@@ -16,27 +16,17 @@ import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
-import Notebooks from './Notebooks';
 import {useState, useEffect} from "react"
-import OneNotebook from './OneNotebook';
-import MainDisplay from './MainDisplay';
+import AddNotebook from './AddNotebook';
+
 
 const drawerWidth = 240;
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const AppBar = () => {
+const AppBar = ({currentUser}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [notes, setNotes] = useState([])
-    const [activeNote, setActiveNote] = useState(false)
-
-    useEffect(() => {
-      fetch('http://localhost:9292/notes')
-      .then(req => req.json())
-      .then(data => setNotes(data))
-  }, [])
-
-
+    const [open, setOpen] = useState(false)
+ 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -44,33 +34,10 @@ const AppBar = () => {
     setAnchorElUser(null);
   };
 
-  const onAddNote = () => {
-    const newNote = {
-      id: 1,
-      title: "Untitled",
-      body: "",
-      lastModified: Date.now()
-    }
-    setNotes([...notes, newNote])
+  const addNotebook = () => {
+    setOpen(true)
   }
 
-  const onDeleteNote = (idToDelete) => {
-    setNotes(notes.filter((note) => note.id !== idToDelete))
-  }
-
-  const onUpdateNote = (updatedNote) => {
-    const updatedNotes = notes.map(note => {
-      if (note.id === activeNote) {
-        return updatedNote
-      }
-      return note
-    })
-    setNotes(updatedNotes)
-  }
-
-  const getActiveNote = () => {
-    return notes.find(note => note.id === activeNote)
-  }
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -90,8 +57,9 @@ const AppBar = () => {
       <Box sx={{ flexGrow: 0, m: 2}}>
             <Tooltip title="View account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar style={{ marginRight: "14px" }} alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                <Typography >Current User </Typography>  
+                <Avatar style={{ marginRight: "14px" }} alt="Remy Sharp" src={currentUser.picture} />
+                <Typography >{currentUser.name} </Typography>  
+                
               </IconButton>
             </Tooltip>
             <Menu
@@ -119,10 +87,12 @@ const AppBar = () => {
           </Box>
       
       <Box sx={{ '& > :not(style)': { m:3 } }}>
+        <IconButton onClick={addNotebook}>
         <Fab variant="extended" size="medium" color="primary" aria-label="add">
           <AddIcon />
           Add New
         </Fab>
+        </IconButton>
       </Box>
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -146,11 +116,7 @@ const AppBar = () => {
         ))}
       </List>
     </Drawer>
-    {/* <OneNotebook notes={notes} onAddNote={onAddNote} onDeleteNote={onDeleteNote} activeNote={activeNote} setActiveNote={setActiveNote}/>
-    <MainDisplay activeNote={getActiveNote()} onUpdateNote={onUpdateNote}/> */}
-    
-    
-    
+    <AddNotebook open={open} onClose={() => setOpen(false)}/>
   </Box>
   );
     
