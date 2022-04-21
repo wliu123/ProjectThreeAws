@@ -35,7 +35,7 @@ import { useNavigate } from "react-router-dom";
             <Button 
             variant="text" 
             onClick={() => {
-              setCurrentNotebook(notebook.title)
+              setCurrentNotebook(notebook)
               navigate("/notebooks/notes")
             }}
             > 

@@ -22,7 +22,7 @@ import {useState, useEffect} from "react"
 const drawerWidth = 240;
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const AppBar = () => {
+const AppBar = ({currentUser}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
  
   const handleOpenUserMenu = (event) => {
@@ -51,8 +51,9 @@ const AppBar = () => {
       <Box sx={{ flexGrow: 0, m: 2}}>
             <Tooltip title="View account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar style={{ marginRight: "14px" }} alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                <Typography >Current User </Typography>  
+                <Avatar style={{ marginRight: "14px" }} alt="Remy Sharp" src={currentUser.picture} />
+                <Typography >{currentUser.name} </Typography>  
+                
               </IconButton>
             </Tooltip>
             <Menu

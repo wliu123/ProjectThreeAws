@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 const OneNotebook = ({notes, setNotes, onAddNote, onDeleteNote, activeNote, setActiveNote, currentNotebook}) => {
     
     useEffect(() => {
-        fetch(`http://localhost:9292/notebook/${currentNotebook}`)
+        fetch(`http://localhost:9292/notebook/${currentNotebook.title}`)
         .then(res => res.json())
         .then (receivedData => setNotes(receivedData.notes))
     }, [currentNotebook])
@@ -14,7 +14,7 @@ const OneNotebook = ({notes, setNotes, onAddNote, onDeleteNote, activeNote, setA
         
         <div className="app-sidebar">
             <div className="app-sidebar-header">
-                <h1>{currentNotebook}</h1>
+                <h1>{currentNotebook.title}</h1>
                 <button onClick={onAddNote}>Add</button>
             </div>
             <div className="app-sidebar-notes">
