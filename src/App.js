@@ -109,7 +109,6 @@ function App() {
     
   return (
     <div className="App">
-      <h1>Typo.io</h1>
     <BrowserRouter>
           <Routes>
 
