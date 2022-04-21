@@ -4,7 +4,7 @@ const MainDisplay = ({activeNote, onUpdateNote}) => {
         onUpdateNote({
             ...activeNote,
             [key] : value,
-            lastModified: Date.now()
+            updated_at: Date.now()
         })
     }
 

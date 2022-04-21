@@ -57,7 +57,10 @@ import { useNavigate } from "react-router-dom";
                           {note.title}
                         </TableCell>
                         <TableCell>
-                            Updated Time
+                            {new Date(note.updated_at).toLocaleDateString("en-US", {
+                                hour: "2-digit",
+                                minute: "2-digit"
+                            })}
                         </TableCell>
                       </TableRow>
                     ))}
