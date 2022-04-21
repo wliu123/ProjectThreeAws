@@ -11,10 +11,9 @@ function WelcomePage({setCurrentUser}) {
 
     const {name} = formState
 
-
     function handleChange(e) {
-        const newFormState = {...formState, [e.target.name]: e.target.value}
-        setFormState(newFormState)
+      const newFormState = {...formState, [e.target.name]: e.target.value}
+      setFormState(newFormState)
     }
 
     let navigate = useNavigate();
@@ -31,9 +30,6 @@ function WelcomePage({setCurrentUser}) {
             console.log(data)
         }})
     }
-
-
-
 
     return (
     <div>
