@@ -60,12 +60,20 @@ function App() {
           <Routes>
 
             <Route path="/" element={<WelcomePage setCurrentUser={setCurrentUser} />}/> 
-            <Route path=":id/home" element={<><AppBar currentUser={currentUser}/> <Notebooks currentUser={currentUser} notebooks={notebooks} setCurrentNotebook={setCurrentNotebook}/> </>} />
+            <Route 
+            path=":id/home" 
+            element={
+              <>
+              <AppBar currentUser={currentUser}/> 
+              <Notebooks currentUser={currentUser} notebooks={notebooks} setCurrentNotebook={setCurrentNotebook}/> 
+              </>
+            } 
+            />
             <Route 
             path="/notebooks/notes" 
             element={
               <>
-              <AppBar /> 
+              <AppBar currentUser={currentUser}/> 
               <OneNotebook activeNote={activeNote} setActiveNote={setActiveNote} onDeleteNote={onDeleteNote} currentNotebook={currentNotebook} notes={notes} setNotes={setNotes} onAddNote={onAddNote}/> 
               <MainDisplay onUpdateNote={onUpdateNote} activeNote={getActiveNote()}/>
               </>

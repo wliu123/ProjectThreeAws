@@ -17,6 +17,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import CssBaseline from '@mui/material/CssBaseline';
 import {useState, useEffect} from "react"
+import AddNotebook from './AddNotebook';
 
 
 const drawerWidth = 240;
@@ -24,6 +25,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const AppBar = ({currentUser}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const [open, setOpen] = useState(false)
  
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -31,6 +33,10 @@ const AppBar = ({currentUser}) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const addNotebook = () => {
+    setOpen(true)
+  }
 
 
   return (
@@ -81,10 +87,12 @@ const AppBar = ({currentUser}) => {
           </Box>
       
       <Box sx={{ '& > :not(style)': { m:3 } }}>
+        <IconButton onClick={addNotebook}>
         <Fab variant="extended" size="medium" color="primary" aria-label="add">
           <AddIcon />
           Add New
         </Fab>
+        </IconButton>
       </Box>
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -108,6 +116,7 @@ const AppBar = ({currentUser}) => {
         ))}
       </List>
     </Drawer>
+    <AddNotebook open={open} onClose={() => setOpen(false)}/>
   </Box>
   );
     
