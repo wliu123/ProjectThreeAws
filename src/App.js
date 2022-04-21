@@ -18,6 +18,8 @@ function App() {
   const [currentNotebook, setCurrentNotebook] = useState("")
   const [notes, setNotes] = useState([])
   const [activeNote, setActiveNote] = useState(false)
+  const [newNotebook, setNewNotebook] = useState({})
+  const [open, setOpen] = useState(false)
 
     useEffect(() => {
       if (currentUser.id) {
@@ -28,28 +30,80 @@ function App() {
   }, [currentUser])
 
   const onAddNote = () => {
-    const newNote = {
-      id: 1,
-      title: "Untitled",
-      body: "",
-      lastModified: Date.now()
-    }
-    setNotes([...notes, newNote])
+    fetch ('http://localhost:9292/new_note', {
+      method: "POST",
+      headers: {
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({
+        title: "Untitled",
+        body: "",
+        user_id: currentUser.id,
+        notebook_id: currentNotebook.id,
+        updated_at: Date.now()
+      })
+    })
+    .then (res => res.json())
+    .then (data => setNotes([...notes, data]))
+    
   }
+
   const onDeleteNote = (idToDelete) => {
+    fetch (`http://localhost:9292/notes/${idToDelete}`,{
+      method: "DELETE"
+    })
     setNotes(notes.filter((note) => note.id !== idToDelete))
   }
+
   const getActiveNote = () => {
     return notes.find(note => note.id === activeNote)
   }
+
   const onUpdateNote = (updatedNote) => {
-    const updatedNotes = notes.map(note => {
-      if (note.id === activeNote) {
-        return updatedNote
-      }
-      return note
+    fetch (`http://localhost:9292/notes/${activeNote}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({
+        title: updatedNote.title,
+        body: updatedNote.body,
+        updated_at: updatedNote.updated_at
+      })
     })
-    setNotes(updatedNotes)
+    .then (res => res.json())
+    .then (data => {
+      const updatedNotes = notes.map(note => {
+        if (note.id === activeNote) {
+          return data
+        }
+        return note
+      })
+      setNotes(updatedNotes)
+    })
+  }
+
+  const addNewNotebook = (e) => {
+    e.preventDefault()
+    fetch ('http://localhost:9292/new_notebook', {
+      method: "POST",
+      headers: {
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify({
+        title: newNotebook.title,
+        created_at: newNotebook.created_at,
+        updated_at: newNotebook.updated_at
+      })
+    })
+    .then(res => res.json())
+    .then (data => {
+      setNotebooks([
+        ...notebooks, 
+        {...data, notes:[]}
+      ])
+    })
+    setOpen(false)
   }
  
     
@@ -64,7 +118,7 @@ function App() {
             path=":id/home" 
             element={
               <>
-              <AppBar currentUser={currentUser}/> 
+              <AppBar currentUser={currentUser} addNewNotebook={addNewNotebook} setNewNotebook={setNewNotebook} open={open} setOpen={setOpen}/> 
               <Notebooks currentUser={currentUser} notebooks={notebooks} setCurrentNotebook={setCurrentNotebook}/> 
               </>
             } 
@@ -73,7 +127,7 @@ function App() {
             path="/notebooks/notes" 
             element={
               <>
-              <AppBar currentUser={currentUser}/> 
+              <AppBar currentUser={currentUser} addNewNotebook={addNewNotebook} setNewNotebook={setNewNotebook} open={open} setOpen={setOpen}/> 
               <OneNotebook activeNote={activeNote} setActiveNote={setActiveNote} onDeleteNote={onDeleteNote} currentNotebook={currentNotebook} notes={notes} setNotes={setNotes} onAddNote={onAddNote}/> 
               <MainDisplay onUpdateNote={onUpdateNote} activeNote={getActiveNote()}/>
               </>

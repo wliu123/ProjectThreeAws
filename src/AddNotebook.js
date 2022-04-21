@@ -6,9 +6,15 @@ import {styleModal} from './styleModal';
 import TextField from '@mui/material/TextField';
 
 
-const AddNotebook = ({open, onClose}) => {
+const AddNotebook = ({open, onClose, addNewNotebook, setNewNotebook}) => {
 
-   
+   const handleOnChange = (e) => {
+       setNewNotebook({
+           title: e.target.value,
+           notes: []
+       })
+       
+   }
     return (
         <Modal open={open} onClose={onClose}>
         <Box sx={styleModal.wrapper}>
@@ -22,8 +28,10 @@ const AddNotebook = ({open, onClose}) => {
           <TextField 
                 name='name' 
                 placeholder='Notebook name...' 
-                label='Name' variant='outlined' 
+                label='Name' 
+                variant='outlined' 
                 size='small' 
+                onChange={handleOnChange}
                 fullWidth 
                 required
             />
@@ -31,7 +39,7 @@ const AddNotebook = ({open, onClose}) => {
           <Box sx={styleModal.buttons}>
             <Button 
                 variant='contained'
-                // onClick={handleSubmit(addNotebook)}
+                onClick={addNewNotebook}
             >
                 Submit
             </Button>

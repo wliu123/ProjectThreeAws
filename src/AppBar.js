@@ -18,14 +18,15 @@ import IconButton from '@mui/material/IconButton';
 import CssBaseline from '@mui/material/CssBaseline';
 import {useState, useEffect} from "react"
 import AddNotebook from './AddNotebook';
+import { fontSize } from '@mui/system';
 
 
 const drawerWidth = 240;
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const AppBar = ({currentUser}) => {
+const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [open, setOpen] = useState(false)
+    
  
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -59,8 +60,9 @@ const AppBar = ({currentUser}) => {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar style={{ marginRight: "14px" }} alt="Remy Sharp" src={currentUser.picture} />
                 <Typography >{currentUser.name} </Typography>  
-                
               </IconButton>
+              
+              
             </Tooltip>
             <Menu
               sx={{ mt: '45px'}}
@@ -85,7 +87,23 @@ const AppBar = ({currentUser}) => {
               ))}
             </Menu>
           </Box>
+          <Divider/>
       
+      <Box 
+        sx={{
+          
+          width: '75%', 
+          display: 'inline-flex', 
+          flexWrap: 'wrap',
+          borderRadius: 2,
+          md:2,
+          fontWeight: 'bold',
+          pl: 2
+        }}>
+      
+      <Typography variant='p'>Bio:</Typography>
+      <Typography variant='subtitle2'>{currentUser.bio}</Typography>
+      </Box>
       <Box sx={{ '& > :not(style)': { m:3 } }}>
         <IconButton onClick={addNotebook}>
         <Fab variant="extended" size="medium" color="primary" aria-label="add">
@@ -116,7 +134,7 @@ const AppBar = ({currentUser}) => {
         ))}
       </List>
     </Drawer>
-    <AddNotebook open={open} onClose={() => setOpen(false)}/>
+    <AddNotebook open={open} onClose={() => setOpen(false)} addNewNotebook={addNewNotebook} setNewNotebook={setNewNotebook}/>
   </Box>
   );
     
