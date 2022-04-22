@@ -16,9 +16,8 @@ import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import CssBaseline from '@mui/material/CssBaseline';
-import {useState, useEffect} from "react"
+import { useState } from "react"
 import AddNotebook from './AddNotebook';
-import { fontSize } from '@mui/system';
 
 
 const drawerWidth = 240;

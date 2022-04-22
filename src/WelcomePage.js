@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../src/images/Typo.mock-06.png"
+
 ////////////////////////////////////// MUI
 
 import Avatar from '@mui/material/Avatar';
@@ -17,44 +18,44 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 
-
-
 ////////////////////////////////////// MUI
 
 
 function WelcomePage({setCurrentUser}) {
     
     const [formState, setFormState] = useState({
-        name: ""
+        username: ""
       })
 
-    const {name} = formState
+    const {username} = formState
 
     function handleChange(e) {
-      const newFormState = {...formState, name: e.target.value}
+      const newFormState = {...formState, [e.target.id]: e.target.value}
       setFormState(newFormState)
     }
 
     let navigate = useNavigate();
 
     function handleFormSubmit(e){
-        e.preventDefault();
+        
+      e.preventDefault();
 
-        fetch(`http://localhost:9292/login/${name}`)
+        fetch(`http://localhost:9292/login/${username}`)
         .then((res) => res.json())
         .then(data => {
-            if (name) {
+            if (username) {
             setCurrentUser(data)
             navigate(`/${data.id}/home`)
-            console.log(data)
-        }})
-    }
+          }
+        })
+      }
+    
 
 
-////////////////
-// MUI
-const theme = createTheme();
-///////////////
+   ////////////////
+   // MUI
+   const theme = createTheme();
+    ///////////////
 
     return (
       <ThemeProvider theme={theme}>
@@ -96,11 +97,11 @@ const theme = createTheme();
               margin="normal"
               required
               fullWidth
-              id="name"
-              label="Name" 
+              id="username"
+              label="username" 
               autoFocus 
               onChange={handleChange} 
-              value={name}
+              value={username}
               />
             <Button
               id="form-btn" 
@@ -131,20 +132,3 @@ const theme = createTheme();
   
 export default WelcomePage;
   
-
-
-// {/* ///////////////////////////////////////// Need to integrate       */}
-//     {/* <div>
-//       <div>
-//         <h2>Welcome to Typo, please sign-in.</h2>
-//             <form onSubmit={handleFormSubmit}>
-//                 <input className="form-inputs" type="text" name="name" placeholder="Name" onChange={handleChange} value={name} />
-//                 <button onClick={handleFormSubmit} id="form-btn" type="submit">Sign-in</button>
-//                 <br></br>
-//                 <a href="http://localhost:3000/sign-up">Don't have an account? Sign up</a>
-//             </form>
-
-//       </div>
-      
-//     </div> */}
-// {/* ///////////////////////////////////////// Need to integrate */}

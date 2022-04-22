@@ -9,16 +9,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-
-
-
-
+import Link from '@mui/material/Link';
 
 function SignUp() {
 
@@ -26,42 +22,26 @@ function SignUp() {
   const theme = createTheme();
 
     const [formData, setFormData] = useState({
-        name: "",
+        username: "",
+        first_name: "",
+        last_name: "",
         email: "",
         bio: "",
         picture: ""
     })
     
-    const {name,email, bio, picture} = formData
+    const {username, first_name, last_name, email, bio, picture} = formData
 
-    function handleNameChange(event) {
-        setFormData({
-          ...formData,
-          name: event.target.value
-        });
-    }
-    function handleEmailChange(event) {
+    function handleChange(event) {
       setFormData({
         ...formData,
-        email: event.target.value
+        [event.target.id]: event.target.value,
       });
-    }
-    function handleBioChange(event) {
-      setFormData({
-        ...formData,
-      bio: event.target.value
-      });
-    }
-    function handlePictureChange(event) {
-      setFormData({
-        ...formData,
-      picture: event.target.value
-      });
-    }
+  }
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    function handleSubmit(event) {
+  function handleSubmit(event) {
         event.preventDefault();
         fetch("http://localhost:9292/users", {
           method: "POST",
@@ -73,7 +53,7 @@ function SignUp() {
         .then(res => res.json())
         .then(data => console.log(data))
         navigate('/');
-    }
+  }
 
 
     return (
@@ -124,20 +104,48 @@ function SignUp() {
                     }}>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12}>
                       <TextField
-                        autoComplete="given-name"
                         type="text" 
-                        id="name" 
-                        placeholder="name" 
-                        value={name} 
-                        onChange={handleNameChange}
+                        id="username" 
+                        placeholder="username" 
+                        value={username} 
+                        onChange={handleChange}
                         required
                         fullWidth
-                        label="Name"
+                        label="username"
                         autoFocus
                       />
                     </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        type="text" 
+                        id="first_name" 
+                        placeholder="first name" 
+                        value={first_name} 
+                        onChange={handleChange}
+                        required
+                        fullWidth
+                        label="first name"
+                        autoFocus
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        type="text" 
+                        id="last_name" 
+                        placeholder="last name" 
+                        value={last_name} 
+                        onChange={handleChange}
+                        required
+                        fullWidth
+                        label="last_name"
+                        autoFocus
+                      />
+                    </Grid>
+
                     <Grid item xs={12}>
                       <TextField
                         required
@@ -146,11 +154,12 @@ function SignUp() {
                         id="email" 
                         placeholder="email" 
                         value={email} 
-                        onChange={handleEmailChange}
+                        onChange={handleChange}
                         label="Email Address"
                         name="email"
                       />
                     </Grid>
+
                     <Grid item xs={12}>
                       <TextField
                         required
@@ -159,7 +168,7 @@ function SignUp() {
                         id="bio" 
                         placeholder="bio" 
                         value={bio} 
-                        onChange={handleBioChange}
+                        onChange={handleChange}
                         label="bio"
                         name="bio"
                         autoComplete="bio"
@@ -173,7 +182,7 @@ function SignUp() {
                         id="picture" 
                         placeholder="link to profile picture" 
                         value={picture} 
-                        onChange={handlePictureChange}
+                        onChange={handleChange}
                         label="picture"
                         name="picture"
                         autoComplete="picture"
@@ -189,6 +198,15 @@ function SignUp() {
                     Sign Up
                   </Button>
                 </Box>
+                <Grid container>
+              <Grid item xs>
+              </Grid>
+              <Grid item>
+                <Link href="http://localhost:3000/" variant="body2">
+                  {"Sign in instead"}
+                </Link>
+              </Grid>
+            </Grid>
               </Box>
               </Box>
               </Paper>
@@ -200,15 +218,3 @@ function SignUp() {
   
   export default SignUp;
   
-
-      // <div>
-    //   <h2>Typo</h2>
-    //   <h1>Hello this is the Sign-Up Page</h1>
-    //     <form onSubmit={handleSubmit}>
-    //         <input type="text" id="name" placeholder="name" value={name} onChange={handleChange}/>
-    //         <input type="text" id="email" placeholder="email" value={email} onChange={handleChange}/>
-    //         <input type="text" id="bio" placeholder="bio" value={bio} onChange={handleChange}/>
-    //         <input type="text"  id="picture" placeholder="link to profile picture" value={picture} onChange={handleChange}/>
-    //         <button onClick={handleSubmit} type="submit">Sign-up</button>
-    //     </form>
-    // </div>
