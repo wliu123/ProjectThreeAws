@@ -42,7 +42,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
             {notebook.title}
             </Button>
           </TableCell>
-          <TableCell >{currentUser.name}</TableCell>
+          <TableCell >{currentUser.first_name}</TableCell>
           <Button onClick={() => onDeleteNotebook(notebook.id)} sx={{mt:2}}variant="text" startIcon={<DeleteIcon />}>
             Delete
           </Button>

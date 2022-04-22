@@ -60,7 +60,7 @@ const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen, not
             <Tooltip title="View account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar style={{ marginRight: "14px" }} alt="Remy Sharp" src={currentUser.picture} />
-                <Typography >{currentUser.name} </Typography>  
+                <Typography variant="caption">{currentUser.email} </Typography>  
               </IconButton>
               
               
