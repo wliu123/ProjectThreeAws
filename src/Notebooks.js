@@ -14,9 +14,10 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useNavigate } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete'
 
   
-  function Row({notebook, currentUser, setCurrentNotebook}) {
+  function Row({notebook, currentUser, setCurrentNotebook, onDeleteNotebook}) {
     const [open, setOpen] = useState(false);
     let navigate = useNavigate()
     return (
@@ -42,22 +43,31 @@ import { useNavigate } from "react-router-dom";
             {notebook.title}
             </Button>
           </TableCell>
-          <TableCell align="right">{currentUser.name}</TableCell>
+          <TableCell >{currentUser.name}</TableCell>
+          <Button onClick={() => onDeleteNotebook(notebook.id)} sx={{mt:2}}variant="text" startIcon={<DeleteIcon />}>
+            Delete
+          </Button>
         </TableRow>
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
             <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ width: 3/4, margin: 1, mx: "auto"}}>
+              <Box sx={{  margin: 1, mx: "auto", }}>
                 <Table size="small" aria-label="notes">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="right">Note Title</TableCell>
+                    <TableCell align="right">Last Updated</TableCell>
+                  </TableRow>
+                </TableHead>
                   
                   <TableBody>
                     {notebook.notes.map((note) => (
                       <TableRow key={note.title}>
-                        <TableCell component="th" scope="row">
+                        <TableCell component="th" scope="row" align="right">
                           {note.title}
                         </TableCell>
-                        <TableCell>
-                            {new Date(note.updated_at).toLocaleDateString("en-US", {
+                        <TableCell align="right">
+                            Last Updated : {new Date(note.updated_at).toLocaleDateString("en-US", {
                                 hour: "2-digit",
                                 minute: "2-digit"
                             })}
@@ -74,7 +84,7 @@ import { useNavigate } from "react-router-dom";
     );
   }
 
-const Notebooks = ({notebooks, currentUser, setCurrentNotebook}) => {
+const Notebooks = ({notebooks, currentUser, setCurrentNotebook, onDeleteNotebook}) => {
     
     // on this component, a table of all the notebooks show. When click on specific notebook it'll open up the notebook to show all the notes within
     
@@ -82,15 +92,16 @@ const Notebooks = ({notebooks, currentUser, setCurrentNotebook}) => {
         <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
-            <TableRow>
+            <TableRow >
               <TableCell />
               <TableCell>Notebook Name</TableCell>
-              <TableCell align="right">Belongs to</TableCell>
+              <TableCell >Belongs to</TableCell>
+              <TableCell >Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {notebooks.map((notebook) => (
-              <Row key={notebook.title} notebook={notebook} currentUser={currentUser} setCurrentNotebook={setCurrentNotebook}/>
+              <Row onDeleteNotebook={onDeleteNotebook} key={notebook.title} notebook={notebook} currentUser={currentUser} setCurrentNotebook={setCurrentNotebook}/>
             ))}
           </TableBody>
         </Table>

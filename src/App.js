@@ -55,6 +55,13 @@ function App() {
     setNotes(notes.filter((note) => note.id !== idToDelete))
   }
 
+  const onDeleteNotebook = (notebookID) => {
+    fetch (`http://localhost:9292/notebooks/${notebookID}`,{
+      method: "DELETE"
+    })
+    setNotebooks(notebooks.filter((notebook) => notebook.id !== notebookID))
+  }
+
   const getActiveNote = () => {
     return notes.find(note => note.id === activeNote)
   }
@@ -117,8 +124,8 @@ function App() {
             path=":id/home" 
             element={
               <>
-              <AppBar currentUser={currentUser} addNewNotebook={addNewNotebook} setNewNotebook={setNewNotebook} open={open} setOpen={setOpen}/> 
-              <Notebooks currentUser={currentUser} notebooks={notebooks} setCurrentNotebook={setCurrentNotebook}/> 
+              <AppBar setCurrentNotebook={setCurrentNotebook} notebooks={notebooks} currentUser={currentUser} addNewNotebook={addNewNotebook} setNewNotebook={setNewNotebook} open={open} setOpen={setOpen}/> 
+              <Notebooks currentUser={currentUser} notebooks={notebooks} setCurrentNotebook={setCurrentNotebook} onDeleteNotebook={onDeleteNotebook}/> 
               </>
             } 
             />
@@ -126,7 +133,7 @@ function App() {
             path="/notebooks/notes" 
             element={
               <>
-              <AppBar currentUser={currentUser} addNewNotebook={addNewNotebook} setNewNotebook={setNewNotebook} open={open} setOpen={setOpen}/> 
+              <AppBar setCurrentNotebook={setCurrentNotebook} notebooks={notebooks} currentUser={currentUser} addNewNotebook={addNewNotebook} setNewNotebook={setNewNotebook} open={open} setOpen={setOpen}/> 
               <OneNotebook activeNote={activeNote} setActiveNote={setActiveNote} onDeleteNote={onDeleteNote} currentNotebook={currentNotebook} notes={notes} setNotes={setNotes} onAddNote={onAddNote}/> 
               <MainDisplay onUpdateNote={onUpdateNote} activeNote={getActiveNote()}/>
               </>

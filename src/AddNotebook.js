@@ -11,7 +11,8 @@ const AddNotebook = ({open, onClose, addNewNotebook, setNewNotebook}) => {
    const handleOnChange = (e) => {
        setNewNotebook({
            title: e.target.value,
-           notes: []
+           created_at: Date.now(),
+           updated_at: Date.now()
        })
        
    }

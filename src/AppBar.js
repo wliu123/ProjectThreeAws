@@ -19,14 +19,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {useState, useEffect} from "react"
 import AddNotebook from './AddNotebook';
 import { fontSize } from '@mui/system';
-
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 const drawerWidth = 240;
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen}) => {
+const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen, notebooks, setCurrentNotebook}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
-    
+    let navigate = useNavigate()
  
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -55,7 +56,7 @@ const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen}) =>
       variant="permanent"
       anchor="left"
     >
-      <Box sx={{ flexGrow: 0, m: 2}}>
+      <Box sx={{ flexGrow: 0, m: 1}}>
             <Tooltip title="View account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar style={{ marginRight: "14px" }} alt="Remy Sharp" src={currentUser.picture} />
@@ -80,18 +81,16 @@ const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen}) =>
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography onClick={() => console.log("Hello")}component="span" textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <Divider/>
       
       <Box 
         sx={{
-          
+          pt: 2,
           width: '75%', 
           display: 'inline-flex', 
           flexWrap: 'wrap',
@@ -101,7 +100,7 @@ const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen}) =>
           pl: 2
         }}>
       
-      <Typography variant='p'>Bio:</Typography>
+      <Typography variant='p'>Bio: </Typography>
       <Typography variant='subtitle2'>{currentUser.bio}</Typography>
       </Box>
       <Box sx={{ '& > :not(style)': { m:3 } }}>
@@ -113,23 +112,28 @@ const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen}) =>
         </IconButton>
       </Box>
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
+      <ListItem 
+            button 
+            onClick={() => {
+              navigate(`/${currentUser.id}/home`)
+            }}>
+              <ListItemIcon>
+                <HomeIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+      </ListItem>
+        {notebooks.map((notebook, index) => (
+          <ListItem 
+            button 
+            key={notebook.title} 
+            onClick={() => {
+              setCurrentNotebook(notebook)
+              navigate("/notebooks/notes")
+            }}>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <MenuBookIcon/>
             </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary={notebook.title} />
           </ListItem>
         ))}
       </List>
