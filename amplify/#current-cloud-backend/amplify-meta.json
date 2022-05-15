@@ -1,0 +1,65 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-projectthreeaws-dev-123838-authRole",
+      "UnauthRoleArn": "arn:aws:iam::530821198547:role/amplify-projectthreeaws-dev-123838-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::530821198547:role/amplify-projectthreeaws-dev-123838-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-projectthreeaws-dev-123838-deployment",
+      "UnauthRoleName": "amplify-projectthreeaws-dev-123838-unauthRole",
+      "StackName": "amplify-projectthreeaws-dev-123838",
+      "StackId": "arn:aws:cloudformation:us-east-1:530821198547:stack/amplify-projectthreeaws-dev-123838/7c9c44d0-caff-11ec-8270-0a97807fcd19",
+      "AmplifyAppId": "d1tr0m0gpk99dp"
+    }
+  },
+  "auth": {
+    "projectthreeAWS": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL",
+          "NAME",
+          "PICTURE"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS",
+            "REQUIRES_UPPERCASE"
+          ]
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-projectthreeaws-dev-123838-deployment/amplify-cfn-templates/auth/projectthreeAWS-cloudformation-template.json",
+        "logicalId": "authprojectthreeAWS"
+      },
+      "lastPushTimeStamp": "2022-05-03T20:40:14.024Z",
+      "output": {
+        "UserPoolId": "us-east-1_5KYseXhgV",
+        "AppClientIDWeb": "3k91nh3fvug0k0gnpndtsmlu9m",
+        "AppClientID": "2hr9i5bu0f7vq7fu4vrklquiqh",
+        "IdentityPoolId": "us-east-1:ef1f74ef-a53d-428f-b73e-0f6546f66f9a",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:530821198547:userpool/us-east-1_5KYseXhgV",
+        "IdentityPoolName": "testAuthIdentityPool__dev",
+        "UserPoolName": "projectthreeAWS"
+      },
+      "lastPushDirHash": "tTkxwTBbF6VmJUxmmGPEI+8DhLg="
+    }
+  }
+}
