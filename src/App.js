@@ -9,6 +9,7 @@ import AppBar from './AppBar';
 import Notebooks from './Notebooks';
 import OneNotebook from './OneNotebook';
 import MainDisplay from './MainDisplay';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react-v1'
 
 
 function App() {
@@ -21,97 +22,97 @@ function App() {
   const [newNotebook, setNewNotebook] = useState({})
   const [open, setOpen] = useState(false)
 
-    useEffect(() => {
-      if (currentUser.id) {
-      fetch(`http://localhost:9292/users/notebooks/${currentUser.id}`)
-      .then(req => req.json())
-      .then(data => setNotebooks(data))
-      }
-  }, [currentUser])
+  //   useEffect(() => {
+  //     if (currentUser.id) {
+  //     fetch(`http://localhost:9292/users/notebooks/${currentUser.id}`)
+  //     .then(req => req.json())
+  //     .then(data => setNotebooks(data))
+  //     }
+  // }, [currentUser])
 
-  const onAddNote = () => {
-    fetch ('http://localhost:9292/new_note', {
-      method: "POST",
-      headers: {
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify({
-        title: "Untitled",
-        body: "",
-        user_id: currentUser.id,
-        notebook_id: currentNotebook.id,
-        updated_at: Date.now()
-      })
-    })
-    .then (res => res.json())
-    .then (data => setNotes([...notes, data]))
+  // const onAddNote = () => {
+  //   fetch ('http://localhost:9292/new_note', {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type":"application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       title: "Untitled",
+  //       body: "",
+  //       user_id: currentUser.id,
+  //       notebook_id: currentNotebook.id,
+  //       updated_at: Date.now()
+  //     })
+  //   })
+  //   .then (res => res.json())
+  //   .then (data => setNotes([...notes, data]))
     
-  }
+  // }
 
-  const onDeleteNote = (idToDelete) => {
-    fetch (`http://localhost:9292/notes/${idToDelete}`,{
-      method: "DELETE"
-    })
-    setNotes(notes.filter((note) => note.id !== idToDelete))
-  }
+  // const onDeleteNote = (idToDelete) => {
+  //   fetch (`http://localhost:9292/notes/${idToDelete}`,{
+  //     method: "DELETE"
+  //   })
+  //   setNotes(notes.filter((note) => note.id !== idToDelete))
+  // }
 
-  const onDeleteNotebook = (notebookID) => {
-    fetch (`http://localhost:9292/notebooks/${notebookID}`,{
-      method: "DELETE"
-    })
-    setNotebooks(notebooks.filter((notebook) => notebook.id !== notebookID))
-  }
+  // const onDeleteNotebook = (notebookID) => {
+  //   fetch (`http://localhost:9292/notebooks/${notebookID}`,{
+  //     method: "DELETE"
+  //   })
+  //   setNotebooks(notebooks.filter((notebook) => notebook.id !== notebookID))
+  // }
 
-  const getActiveNote = () => {
-    return notes.find(note => note.id === activeNote)
-  }
+  // const getActiveNote = () => {
+  //   return notes.find(note => note.id === activeNote)
+  // }
 
-  const onUpdateNote = (updatedNote) => {
-    fetch (`http://localhost:9292/notes/${activeNote}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify({
-        title: updatedNote.title,
-        body: updatedNote.body,
-        updated_at: updatedNote.updated_at
-      })
-    })
-    .then (res => res.json())
-    .then (data => {
-      const updatedNotes = notes.map(note => {
-        if (note.id === activeNote) {
-          return data
-        }
-        return note
-      })
-      setNotes(updatedNotes)
-    })
-  }
+  // const onUpdateNote = (updatedNote) => {
+  //   fetch (`http://localhost:9292/notes/${activeNote}`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type":"application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       title: updatedNote.title,
+  //       body: updatedNote.body,
+  //       updated_at: updatedNote.updated_at
+  //     })
+  //   })
+  //   .then (res => res.json())
+  //   .then (data => {
+  //     const updatedNotes = notes.map(note => {
+  //       if (note.id === activeNote) {
+  //         return data
+  //       }
+  //       return note
+  //     })
+  //     setNotes(updatedNotes)
+  //   })
+  // }
 
-  const addNewNotebook = (e) => {
-    e.preventDefault()
-    fetch ('http://localhost:9292/new_notebook', {
-      method: "POST",
-      headers: {
-        "Content-Type" : "application/json"
-      },
-      body: JSON.stringify({
-        title: newNotebook.title,
-        created_at: newNotebook.created_at,
-        updated_at: newNotebook.updated_at
-      })
-    })
-    .then(res => res.json())
-    .then (data => {
-      setNotebooks([
-        ...notebooks, 
-        {...data, notes:[]}
-      ])
-    })
-    setOpen(false)
-  }
+  // const addNewNotebook = (e) => {
+  //   e.preventDefault()
+  //   fetch ('http://localhost:9292/new_notebook', {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type" : "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       title: newNotebook.title,
+  //       created_at: newNotebook.created_at,
+  //       updated_at: newNotebook.updated_at
+  //     })
+  //   })
+  //   .then(res => res.json())
+  //   .then (data => {
+  //     setNotebooks([
+  //       ...notebooks, 
+  //       {...data, notes:[]}
+  //     ])
+  //   })
+  //   setOpen(false)
+  // }
  
     
   return (
@@ -119,17 +120,17 @@ function App() {
     <BrowserRouter>
           <Routes>
 
-            <Route path="/" element={<WelcomePage setCurrentUser={setCurrentUser} />}/> 
+            {/* <Route path="/" element={<WelcomePage setCurrentUser={setCurrentUser} />}/>  */}
             <Route 
             path=":id/home" 
             element={
               <>
-              <AppBar setCurrentNotebook={setCurrentNotebook} notebooks={notebooks} currentUser={currentUser} addNewNotebook={addNewNotebook} setNewNotebook={setNewNotebook} open={open} setOpen={setOpen}/> 
-              <Notebooks currentUser={currentUser} notebooks={notebooks} setCurrentNotebook={setCurrentNotebook} onDeleteNotebook={onDeleteNotebook}/> 
+              <AppBar /> 
+              <Notebooks /> 
               </>
             } 
             />
-            <Route 
+            {/* <Route 
             path="/notebooks/notes" 
             element={
               <>
@@ -137,16 +138,17 @@ function App() {
               <OneNotebook activeNote={activeNote} setActiveNote={setActiveNote} onDeleteNote={onDeleteNote} currentNotebook={currentNotebook} notes={notes} setNotes={setNotes} onAddNote={onAddNote}/> 
               <MainDisplay onUpdateNote={onUpdateNote} activeNote={getActiveNote()}/>
               </>
-            } 
+            }  */}
             />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="*" element={<ErrorPage />} />
+            {/* <Route path="/sign-up" element={<SignUp />} /> */}
+            {/* <Route path="*" element={<ErrorPage />} /> */}
 
           </Routes>
     </BrowserRouter>
+    <AmplifySignOut/>
     </div>
    
     );
 }
 
-export default App;
+export default withAuthenticator(App);

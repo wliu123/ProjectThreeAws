@@ -25,7 +25,7 @@ import HomeIcon from '@mui/icons-material/Home';
 
 const drawerWidth = 240;
 
-const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen, notebooks, setCurrentNotebook}) => {
+const AppBar = ({}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
     let navigate = useNavigate()
  
@@ -36,9 +36,9 @@ const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen, not
     setAnchorElUser(null);
   };
 
-  const addNotebook = () => {
-    setOpen(true)
-  }
+  // const addNotebook = () => {
+  //   setOpen(true)
+  // }
 
 
   return (
@@ -59,8 +59,8 @@ const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen, not
       <Box sx={{ flexGrow: 0, m: 1}}>
             <Tooltip title="View account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar style={{ marginRight: "14px" }} alt="Remy Sharp" src={currentUser.picture} />
-                <Typography variant="caption">{currentUser.email} </Typography>  
+                <Avatar style={{ marginRight: "14px" }} alt="Remy Sharp"  />
+                <Typography variant="caption">hello </Typography>  
               </IconButton>
               
               
@@ -101,10 +101,10 @@ const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen, not
         }}>
       
       <Typography variant='p'>Bio: </Typography>
-      <Typography variant='subtitle2'>{currentUser.bio}</Typography>
+      <Typography variant='subtitle2'>bio</Typography>
       </Box>
       <Box sx={{ '& > :not(style)': { m:3 } }}>
-        <IconButton onClick={addNotebook}>
+        <IconButton >
         <Fab variant="extended" size="medium" color="primary" aria-label="add">
           <AddIcon />
           Add New
@@ -115,14 +115,14 @@ const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen, not
       <ListItem 
             button 
             onClick={() => {
-              navigate(`/${currentUser.id}/home`)
+              navigate(`/1/home`)
             }}>
               <ListItemIcon>
                 <HomeIcon/>
               </ListItemIcon>
               <ListItemText primary="Home" />
       </ListItem>
-        {notebooks.map((notebook, index) => (
+        {/* {notebooks.map((notebook, index) => (
           <ListItem 
             button 
             key={notebook.title} 
@@ -133,12 +133,12 @@ const AppBar = ({currentUser, addNewNotebook, setNewNotebook, open, setOpen, not
             <ListItemIcon>
               <MenuBookIcon/>
             </ListItemIcon>
-            <ListItemText primary={notebook.title} />
+            <ListItemText primary="hello" />
           </ListItem>
-        ))}
+        ))} */}
       </List>
     </Drawer>
-    <AddNotebook open={open} onClose={() => setOpen(false)} addNewNotebook={addNewNotebook} setNewNotebook={setNewNotebook}/>
+    <AddNotebook />
   </Box>
   );
     
